@@ -25,3 +25,11 @@ void clear_led()
 	set_led(PC1,0);
 	set_led(PC2,0);
 }
+uint16_t read_adc(uint8_t channel)
+{
+	ADMUX =(0<<REFS1)|(1<<REFS0)|(0<<ADLAR)|(channel & 0b1111);
+	ADCSRA = (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0)|(1<<ADSC);
+	while((ADCSRA & (1<<ADSC)))
+		;
+	return ADC;
+}
